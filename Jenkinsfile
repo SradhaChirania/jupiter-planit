@@ -43,12 +43,8 @@ pipeline {
         }
 
         stage('Run Tests') {
-            environment {
-                // Prevent Playwright HTML reporter from scraping commit info
-                CI_COMMIT_SHA = ''
-                GITHUB_SHA    = ''
-            }
             steps {
+                unset GITHUB_SHA CI_COMMIT_SHA GIT_COMMIT
                 sh 'rm -rf playwright-report test-results'
                 sh 'npx playwright test'
             }
