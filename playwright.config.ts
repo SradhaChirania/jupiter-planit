@@ -9,11 +9,6 @@ if (!process.env.CI) {
 
 export default defineConfig({
   testDir: './tests',
-  metadata: {},
-  captureGitInfo: {
-    commit: false,
-    diff: false
-  },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
