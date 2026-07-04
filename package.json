@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SradhaChirania/jupiter-planit.git"
@@ -20,6 +23,8 @@
     "@faker-js/faker": "^10.5.0",
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.1.0",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.2",
     "dotenv": "^17.4.2"
   }
 }

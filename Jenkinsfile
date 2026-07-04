@@ -37,15 +37,14 @@ pipeline {
         }
 
         stage('Run Tests') {
-            environment {
-                // Unset git env vars so Playwright does not capture commit info in the report
-                CI_COMMIT_SHA = ''
-                GITHUB_SHA    = ''
-                GIT_COMMIT    = ''
-                GIT_URL       = ''
-            }
             steps {
                 sh 'npx playwright test'
+            }
+        }
+
+        stage('Generate Allure Report') {
+            steps {
+                sh 'npx allure generate allure-results --clean -o allure-report'
             }
         }
     }
@@ -56,14 +55,14 @@ pipeline {
                 allowMissing         : true,
                 alwaysLinkToLastBuild: true,
                 keepAll              : true,
-                reportDir            : 'playwright-report',
+                reportDir            : 'allure-report',
                 reportFiles          : 'index.html',
-                reportName           : 'Playwright Test Report'
+                reportName           : 'Allure Test Report'
             ])
         }
         failure {
             archiveArtifacts(
-                artifacts       : 'playwright-report/**,test-results/**',
+                artifacts        : 'allure-results/**,test-results/**',
                 allowEmptyArchive: true
             )
         }

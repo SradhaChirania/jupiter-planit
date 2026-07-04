@@ -9,14 +9,12 @@ if (!process.env.CI) {
 
 export default defineConfig({
   testDir: './tests',
-  metadata: undefined,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  captureGitInfo: { commit: false, diff: false },
   reporter: [
-    ['html', { open: 'never' , captureGitInfo: false }],
+    ['allure-playwright', { detail: true, outputFolder: 'allure-results', suiteTitle: false }],
     ['list'],
   ],
   use: {
