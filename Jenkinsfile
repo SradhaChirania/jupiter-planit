@@ -38,9 +38,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                
                     sh 'npx playwright test'
-                
             }
         }
     }
@@ -55,6 +53,8 @@ pipeline {
                 reportFiles: 'index.html',
                 reportName: 'Playwright Test Report'
             ])
+        }
+        failure {
             archiveArtifacts(
                 artifacts: 'playwright-report/**,test-results/**',
                 allowEmptyArchive: true

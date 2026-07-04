@@ -9,16 +9,12 @@ if (!process.env.CI) {
 
 export default defineConfig({
   testDir: './tests',
-  captureGitInfo: {
-    commit: false,
-    diff: false
-  },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
-    ['html', { open: 'never' }],
+    ['html', { open: 'never' , captureGitInfo: false }],
     ['list'],
   ],
   use: {
