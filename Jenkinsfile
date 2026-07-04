@@ -38,9 +38,11 @@ pipeline {
 
         stage('Run Tests') {
             environment {
-                // Unset these to prevent CI systems from scraping commit info
+                // Unset git env vars so Playwright does not capture commit info in the report
                 CI_COMMIT_SHA = ''
                 GITHUB_SHA    = ''
+                GIT_COMMIT    = ''
+                GIT_URL       = ''
             }
             steps {
                 sh 'npx playwright test'
