@@ -30,12 +30,6 @@ pipeline {
             }
         }
 
-        stage('Playwright Version') {
-            steps {
-                sh 'npx playwright --version'
-            }
-        }
-
         stage('Install Playwright Browsers') {
             steps {
                 sh 'npx playwright install --with-deps chromium'
@@ -43,13 +37,13 @@ pipeline {
         }
 
         stage('Run Tests') {
+            environment {
+                // Unset these to prevent CI systems from scraping commit info
+                CI_COMMIT_SHA = ''
+                GITHUB_SHA    = ''
+            }
             steps {
-                sh 'rm -rf playwright-report test-results'
-                sh '''
-                    unset GITHUB_SHA CI_COMMIT_SHA GIT_COMMIT
-                    npx playwright test'
-                '''
-                
+                sh 'npx playwright test'
             }
         }
     }
@@ -67,7 +61,7 @@ pipeline {
         }
         failure {
             archiveArtifacts(
-                artifacts        : 'playwright-report/**,test-results/**',
+                artifacts       : 'playwright-report/**,test-results/**',
                 allowEmptyArchive: true
             )
         }
