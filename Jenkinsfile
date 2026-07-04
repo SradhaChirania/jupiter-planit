@@ -44,9 +44,12 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                unset GITHUB_SHA CI_COMMIT_SHA GIT_COMMIT
-                sh 'rm -rf playwright-report test-results'
-                sh 'npx playwright test'
+                sh '''
+                    unset GITHUB_SHA CI_COMMIT_SHA GIT_COMMIT
+                    rm -rf playwright-report test-results'
+                    npx playwright test'
+                '''
+                
             }
         }
     }
