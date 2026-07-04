@@ -9,9 +9,8 @@ pipeline {
     }
 
     environment {
-        BASE_URL                     = 'http://jupiter.cloud.planittesting.com'
-        CI                           = 'true'
-        PLAYWRIGHT_JUNIT_OUTPUT_NAME = 'test-results/junit-results.xml'
+        BASE_URL = 'http://jupiter.cloud.planittesting.com'
+        CI       = 'true'
     }
 
     tools {
@@ -39,17 +38,13 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'npx playwright test --reporter=html,junit'
+                sh 'npx playwright test'
             }
         }
     }
 
     post {
         always {
-            junit(
-                testResults: 'test-results/junit-results.xml',
-                allowEmptyResults: true
-            )
             publishHTML([
                 allowMissing: true,
                 alwaysLinkToLastBuild: true,

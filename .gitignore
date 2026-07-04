@@ -4,6 +4,7 @@ node_modules/
 # Environment variables
 .env
 
+
 # Playwright output
 /test-results/
 /playwright-report/
@@ -11,6 +12,9 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 
+
+# OS
+.DS_Store
 
 # IDE
 .vscode/

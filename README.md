@@ -47,9 +47,24 @@ npx playwright test --grep "Submit contact page" --repeat-each=5
 npx playwright test --debug
 ```
 
-## Viewing Reports
+## Reporting & Artifacts
 
-After a test run, open the HTML report:
+Two reporters run on every execution:
+
+| Reporter | Output | Purpose |
+|----------|--------|---------|
+| `html`   | `playwright-report/index.html` | Browsable report with screenshots and traces |
+| `list`   | stdout | Real-time pass/fail output in the terminal |
+
+**Screenshots** are captured after every test regardless of result and are embedded in the HTML report.
+
+**Traces** are recorded for every test but only retained for failures — open them in the HTML report or with:
+
+```bash
+npx playwright show-trace test-results/<test-name>/trace.zip
+```
+
+Open the full HTML report locally:
 
 ```bash
 npx playwright show-report
@@ -62,8 +77,8 @@ The `Jenkinsfile` defines the pipeline:
 1. **Checkout** — checks out the triggering branch
 2. **Install Dependencies** — `npm ci`
 3. **Install Playwright Browsers** — installs Chromium with system dependencies
-4. **Run Tests** — executes the full suite; generates HTML and JUnit reports
-5. **Post** — publishes the HTML report, JUnit results (for trend graphs), and archives traces/screenshots on failure
+4. **Run Tests** — executes the full suite and generates the HTML report
+5. **Post** — publishes the HTML report and archives screenshots and traces on failure
 
 Test results and artifacts are available on the Jenkins build page under *Playwright Test Report*.
 
