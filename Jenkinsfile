@@ -53,10 +53,8 @@ pipeline {
                 reportFiles: 'index.html',
                 reportName: 'Playwright Test Report'
             ])
-        }
-        failure {
             archiveArtifacts(
-                artifacts: 'test-results/**',
+                artifacts: 'playwright-report/**,test-results/**',
                 allowEmptyArchive: true
             )
         }
