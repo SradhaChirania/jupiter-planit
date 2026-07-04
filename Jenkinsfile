@@ -37,8 +37,13 @@ pipeline {
         }
 
         stage('Run Tests') {
+            environment {
+                // Prevent Playwright HTML reporter from scraping commit info
+                CI_COMMIT_SHA = ''
+                GITHUB_SHA    = ''
+            }
             steps {
-                    sh 'npx playwright test'
+                sh 'npx playwright test'
             }
         }
     }
@@ -46,17 +51,17 @@ pipeline {
     post {
         always {
             publishHTML([
-                allowMissing: true,
+                allowMissing         : true,
                 alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'playwright-report',
-                reportFiles: 'index.html',
-                reportName: 'Playwright Test Report'
+                keepAll              : true,
+                reportDir            : 'playwright-report',
+                reportFiles          : 'index.html',
+                reportName           : 'Playwright Test Report'
             ])
         }
         failure {
             archiveArtifacts(
-                artifacts: 'playwright-report/**,test-results/**',
+                artifacts        : 'playwright-report/**,test-results/**',
                 allowEmptyArchive: true
             )
         }
